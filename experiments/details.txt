@@ -1,0 +1,4 @@
+key = b'\xe4\xf1\xf1\xc4d\xb7\x8b'
+
+ciphertext_int = 64442315368158696
+ciphertext_byte = b'\xe4\xf1\xf1\xc4\x05\xd5\xe8'
