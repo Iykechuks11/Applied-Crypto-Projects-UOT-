@@ -1,5 +1,6 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # https://docs.python.org/3/library/operator.html
+
 import os
 import sys
 
@@ -10,7 +11,7 @@ def bi(b):
     for byte in b:
         # print(byte)
         int_val = (int_val << 8) | byte
-        # print(int_val)
+    # print(int_val)
     return int_val
 
 
@@ -41,21 +42,22 @@ def encrypt(pfile):
     try:
         with open(pfile, 'rb') as f_plain:
             plaintext_byte = f_plain.read()
-            # print("The context of the opened file:")
-            # print(plaintext_byte)
+            print("The context of the opened file:")
+            print(plaintext_byte)
 
             # convert plaintext bytes to one big integer
             plaintext_byte_int = bi(plaintext_byte)
-            # print(f"The plaintext converted to integer is {plaintext_byte_int}")
+            print(
+                f"The plaintext converted to integer is {plaintext_byte_int}")
 
             # obtain random key the same length as plaintext
             len_ptext = len(plaintext_byte)
             # print(f"The length of the plaintext: {len_ptext}")
             random_key = os.urandom(len_ptext)
-            # print(f"The random key generated: {random_key}")
+            print(f"The random key generated: {random_key}")
             # print(f"The length of the random key: {len(random_key)}")
             random_key_int = bi(random_key)
-            # print(f"The random key converted to integer is {random_key_int}")
+            print(f"The random key converted to integer is {random_key_int}")
 
             # ensure that length is same
             assert len(plaintext_byte) == len(
@@ -72,11 +74,13 @@ def encrypt(pfile):
             # save the key to the key file
             with open("kfile", 'wb') as f_key:
                 f_key.write(random_key)
+                f_key.close()
             # print(f"Key saved to: {kfile}")
 
             # save the ciphertext to the ciphertext file
             with open("cfile", 'wb') as f_cipher:
                 f_cipher.write(ciphertext_byte)
+                f_cipher.close()
             # print(f"Ciphertext saved to: {cfile}")
 
     except FileNotFoundError:
@@ -89,12 +93,26 @@ def encrypt(pfile):
 
 def decrypt(cfile, kfile, pfile):
     # convert cfile, kfile from byte to int
-    cfile_int = bi(cfile)
-    kfile_int = bi(kfile)
-    # xor cfile and kfile
-    p = cfile_int ^ kfile_int
-    assert p == pfile, "Decryptor error"
-    return pfile
+    with open(cfile, "rb") as cfile, open(kfile, "rb") as kfile, open(pfile, "rb") as pfile:
+        cfile = cfile.read()
+        kfile = kfile.read()
+        pfile = pfile.read()
+
+        # if len(cfile) != len(kfile):
+        #     raise ValueError("Ciphertext and key lengths do not match")
+
+        cfile_int = bi(cfile)
+        kfile_int = bi(kfile)
+        pfile_int = bi(pfile)
+        # xor cfile and kfile
+        print(pfile_int)
+        print(cfile_int)
+        print(kfile_int)
+
+        p = cfile_int ^ kfile_int
+        print(p)
+        assert p == pfile_int, "Decryptor error"
+        return pfile
 
 
 c = encrypt("file.plain")

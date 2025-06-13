@@ -78,7 +78,7 @@ def decrypt(c, k):
     print(f"Ciphertext to int: {ctext_int}")
 
     key_int = bi(k)
-    print(f"Ciphertext to int: {key_int}")
+    print(f"Key to int: {key_int}")
 
     p_maybe = ctext_int ^ key_int
     print(f"Maybe this is the plaintext: {p_maybe}")

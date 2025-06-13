@@ -11,4 +11,9 @@ You can find more details about the course from the playlist link below. Additio
 ## Projects Completed
 
 - One-time-pad (OTP)
+
   - OTP is a cryptosystem that is unbreakable, and impractical at the sametime. The crypto needs a a new key with keylength = plaintext length for every encryption. [More details](https://en.wikipedia.org/wiki/One-time_pad)
+
+- Abstract Syntax Notation 1 (ASN1)
+
+  - The task is to implement ASN.1 DER (Distinguished Encoding Rule) encoder that can encode subset of ASN.1 types by implementing these function: `asn1_boolean(boolean)`, `asn1_integer(i)`... (I have completed the boolean function which now returns an encoded output).
